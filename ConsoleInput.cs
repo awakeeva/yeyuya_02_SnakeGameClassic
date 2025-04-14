@@ -16,12 +16,12 @@
         {
             arrowListeners.Add(l);
         }
-
+        
         public void Update()
         {
             while (Console.KeyAvailable)
             {
-                var key = Console.ReadKey();
+                var key = Console.ReadKey(true);
 
                 switch (key.Key)
                 {
