@@ -1,4 +1,4 @@
-﻿namespace yeyuya_02_SnakeGameClassic
+﻿namespace yeyuya_02_SnakeGameClassic.snake
 {
     internal enum SnakeDir
     {

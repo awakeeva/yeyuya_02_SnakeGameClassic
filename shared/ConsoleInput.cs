@@ -1,4 +1,4 @@
-﻿namespace yeyuya_02_SnakeGameClassic
+﻿namespace yeyuya_02_SnakeGameClassic.shared
 {
     internal class ConsoleInput
     {
@@ -16,7 +16,7 @@
         {
             arrowListeners.Add(l);
         }
-        
+
         public void Update()
         {
             while (Console.KeyAvailable)
