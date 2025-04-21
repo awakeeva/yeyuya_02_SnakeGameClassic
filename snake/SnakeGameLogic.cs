@@ -5,13 +5,31 @@ namespace yeyuya_02_SnakeGameClassic.snake;
 internal class SnakeGameLogic : BaseGameLogic
 {
     private SnakeGamePlayState gameplayState = new SnakeGamePlayState();
+    private bool newGamePending = false;
+    private int currLevel = 0;
+    private ShowTextState showTextState = new(2f);
 
     public void GotoGameplay()
     {
+        gameplayState.level = currLevel;
         gameplayState.fieldHeight = screenHeight;
         gameplayState.fieldWidth = screenWidth;
         ChangeState(gameplayState);
         gameplayState.Reset();
+    }
+    private void GotoGameOver()
+    {
+        currLevel = 0;
+        newGamePending = true;
+        showTextState.text = $"Game Over!";
+        ChangeState(showTextState);
+    }
+    private void GotoNextLevel()
+    {
+        currLevel++;
+        newGamePending = false;
+        showTextState.text = $"Level {currLevel}";
+        ChangeState(showTextState);
     }
     public override void OnArrowDown()
     {
@@ -43,8 +61,22 @@ internal class SnakeGameLogic : BaseGameLogic
 
     public override void Update(float deltaTime)
     {
-        //gameplayState.Update(deltaTime);
-        if (currentState != gameplayState)
+        if (currentState != null && !currentState.IsDone())
+            return;
+
+        if (currentState == null || currentState == gameplayState && !gameplayState.gameOver)
+        {
+            GotoNextLevel();
+        }
+        else if (currentState == gameplayState && gameplayState.gameOver)
+        {
+            GotoGameOver();
+        }
+        else if (currentState != gameplayState && newGamePending)
+        {
+            GotoNextLevel();
+        }
+        else if (currentState != gameplayState && !newGamePending)
         {
             GotoGameplay();
         }
